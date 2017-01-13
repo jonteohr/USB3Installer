@@ -17,7 +17,7 @@ public class MainFrame extends JFrame {
 	private static String windowTitle = "WIN7 USB3 Installer";
 
 	/**
-	 * Självaste egenskaperna för fönstret i sig.
+	 * The properties for the window itself
 	 */
 	public MainFrame() {
 		super(windowTitle);
@@ -51,7 +51,7 @@ public class MainFrame extends JFrame {
 		setResizable(false);
 		System.out.println("Launching...");
 		
-		textPanel.appendText("Inväntar konfigurering...");
+		textPanel.appendText("Waiting for configuration\n");
 	}
 	
 }

@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 
 public class Toolbar extends JPanel implements ActionListener {
 	
-	private JButton arkiv = new JButton("Arkiv");
+	private JButton file = new JButton("File");
 	private JButton Bye = new JButton("Test");
 	
 	private StringListener textListener;
@@ -23,10 +23,10 @@ public class Toolbar extends JPanel implements ActionListener {
 		
 		setLayout(new FlowLayout(FlowLayout.LEFT));
 		
-		add(arkiv);
+		add(file);
 		add(Bye);
 		
-		arkiv.addActionListener(this);
+		file.addActionListener(this);
 		Bye.addActionListener(this);
 		
 	}
@@ -43,13 +43,13 @@ public class Toolbar extends JPanel implements ActionListener {
 		if(clicked == Bye) {
 			
 			if(textListener != null) {
-				textListener.textEmitted("Hajjdu\n");
+				textListener.textEmitted("Bye\n");
 			}
 			
-		} else if(clicked == arkiv) {
+		} else if(clicked == file) {
 			
 			if(textListener != null) {
-				textListener.textEmitted("Arkiv klickad!\n");
+				textListener.textEmitted("File clicked!\n");
 			}
 			
 		}

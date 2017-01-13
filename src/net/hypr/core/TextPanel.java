@@ -13,7 +13,7 @@ public class TextPanel extends JPanel {
 	public TextPanel() {
 		
 		setLayout(new BorderLayout());
-		
+		textArea.setEditable(false);
 		add(new JScrollPane(textArea), BorderLayout.CENTER);
 		
 	}

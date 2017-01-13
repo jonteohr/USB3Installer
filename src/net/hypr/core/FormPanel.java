@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -13,22 +15,25 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
-public class FormPanel extends JPanel {
+public class FormPanel extends JPanel implements ActionListener {
 	
-	private JLabel nameLab = new JLabel("Mapp: ");
-	private JLabel occupationLab = new JLabel("Occupation: ");
-	private JTextField nameField = new JTextField(10);
-	private JTextField occupationField = new JTextField(10);
-	private JLabel osLab = new JLabel("Operativsystem: ");
-	private String[] osList = {"Välj OS", "Windows 7 Pro", "Windows 7 Home", "Windows 7 Ultimate"};
-	private JButton okBtn = new JButton("OK");
+	private JLabel nameLab = new JLabel(".ISO: ");
+	private JLabel occupationLab = new JLabel("Drivers: ");
+	private JTextField nameField = new JTextField(8);
+	private JTextField occupationField = new JTextField(8);
+	private JLabel osLab = new JLabel("OS: ");
+	private String[] osList = {"Choose OS", "Windows 7 Pro", "Windows 7 Home", "Windows 7 Ultimate"};
+	private JButton okBtn = new JButton("Go!");
+	
+	private StringListener textListener;
 	
 	public FormPanel() {
+		
 		Dimension dim = getPreferredSize();
-		dim.width = 265;
+		dim.width = 270;
 		setPreferredSize(dim);
 		
-		Border innerBorder = BorderFactory.createTitledBorder("Konfiguration");
+		Border innerBorder = BorderFactory.createTitledBorder("Configuration");
 		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
 		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
 		
@@ -107,6 +112,24 @@ public class FormPanel extends JPanel {
 		gc.gridy = 3;
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		add(okBtn, gc);
+		
+		okBtn.addActionListener(this);
+	}
+
+	public void setStringListener(StringListener listener) {
+		this.textListener = listener;
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		JButton clicked = (JButton) e.getSource();
+		
+		if(clicked == okBtn) {
+			if(textListener != null) {
+				textListener.textEmitted("Installing drivers...\n");
+			}
+		}
+		
 	}
 
 }
