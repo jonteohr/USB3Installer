@@ -45,6 +45,16 @@ public class MainFrame extends JFrame {
 			
 		});
 		
+		formPanel.setFormListener(new FormListener() {
+			public void formEventOccured(FormEvent e) {
+				String iso = e.getIso();
+				String drivers = e.getDrivers();
+				
+				textPanel.appendText("Chose .iso file: " + iso + "\n");
+				textPanel.appendText("Chose drivers file: " + drivers + "\n");
+			}
+		});
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(640, 480);
 		setVisible(true);

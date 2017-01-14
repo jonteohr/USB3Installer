@@ -15,19 +15,33 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
-public class FormPanel extends JPanel implements ActionListener {
+public class FormPanel extends JPanel {
 	
-	private JLabel nameLab = new JLabel(".ISO: ");
-	private JLabel occupationLab = new JLabel("Drivers: ");
-	private JTextField nameField = new JTextField(8);
-	private JTextField occupationField = new JTextField(8);
+	private JLabel isoLab = new JLabel(".ISO: ");
+	private JLabel driversLab = new JLabel("Drivers: ");
+	private JTextField isoField = new JTextField(8);
+	private JTextField driversField = new JTextField(8);
 	private JLabel osLab = new JLabel("OS: ");
 	private String[] osList = {"Choose OS", "Windows 7 Pro", "Windows 7 Home", "Windows 7 Ultimate"};
 	private JButton okBtn = new JButton("Go!");
 	
-	private StringListener textListener;
+	private FormListener formListener;
 	
 	public FormPanel() {
+		
+		okBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String iso = isoField.getText();
+				String drivers = driversField.getText();
+				
+				FormEvent ev = new FormEvent(this, iso, drivers);
+				
+				if(formListener != null) {
+					formListener.formEventOccured(ev);
+				}
+			}
+		});
 		
 		Dimension dim = getPreferredSize();
 		dim.width = 270;
@@ -55,13 +69,13 @@ public class FormPanel extends JPanel implements ActionListener {
 		gc.fill = GridBagConstraints.NONE;
 		gc.anchor = GridBagConstraints.LINE_END;
 		gc.insets = labelInset;
-		add(nameLab, gc);
+		add(isoLab, gc);
 		
 		gc.gridx = 1;
 		gc.gridy = 0;
 		gc.insets = textInset;
 		gc.anchor = GridBagConstraints.LINE_START;
-		add(nameField, gc);
+		add(isoField, gc);
 		
 		/*
 		 * SECOND ROW
@@ -73,13 +87,13 @@ public class FormPanel extends JPanel implements ActionListener {
 		gc.gridy = 1;
 		gc.anchor = GridBagConstraints.LINE_END;
 		gc.insets = labelInset;
-		add(occupationLab, gc);
+		add(driversLab, gc);
 		
 		gc.gridx = 1;
 		gc.gridy = 1;
 		gc.insets = textInset;
 		gc.anchor = GridBagConstraints.LINE_START;
-		add(occupationField, gc);
+		add(driversField, gc);
 		
 		/*
 		 * THIRD ROW
@@ -113,23 +127,10 @@ public class FormPanel extends JPanel implements ActionListener {
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		add(okBtn, gc);
 		
-		okBtn.addActionListener(this);
-	}
-
-	public void setStringListener(StringListener listener) {
-		this.textListener = listener;
 	}
 	
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		JButton clicked = (JButton) e.getSource();
-		
-		if(clicked == okBtn) {
-			if(textListener != null) {
-				textListener.textEmitted("Installing drivers...\n");
-			}
-		}
-		
+	public void setFormListener(FormListener listener) {
+		this.formListener = listener;
 	}
 
 }

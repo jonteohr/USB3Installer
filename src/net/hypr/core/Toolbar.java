@@ -23,6 +23,9 @@ public class Toolbar extends JPanel implements ActionListener {
 		
 		setLayout(new FlowLayout(FlowLayout.LEFT));
 		
+		file.setFont(smallSystemFont);
+		Bye.setFont(smallSystemFont);
+		
 		add(file);
 		add(Bye);
 		
