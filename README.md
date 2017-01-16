@@ -11,5 +11,5 @@ I've uploaded the source-files here because I want people contributing to the pr
 
 --
 
-### Useful links
+### Other links
 [Twitter](http://twitter.com/hyprcsgo)
