@@ -17,9 +17,9 @@ import javax.swing.border.Border;
 
 public class FormPanel extends JPanel {
 	
-	private JLabel isoLab = new JLabel(".ISO: ");
+	private JLabel workLab = new JLabel("Workspace: ");
 	private JLabel driversLab = new JLabel("Drivers: ");
-	private JTextField isoField = new JTextField(8);
+	private JTextField workField = new JTextField(8);
 	private JTextField driversField = new JTextField(8);
 	private JLabel osLab = new JLabel("OS: ");
 	private String[] osList = {"Choose OS", "Windows 7 Pro", "Windows 7 Home", "Windows 7 Ultimate"};
@@ -32,7 +32,7 @@ public class FormPanel extends JPanel {
 		okBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String iso = isoField.getText();
+				String iso = workField.getText();
 				String drivers = driversField.getText();
 				
 				FormEvent ev = new FormEvent(this, iso, drivers);
@@ -69,13 +69,13 @@ public class FormPanel extends JPanel {
 		gc.fill = GridBagConstraints.NONE;
 		gc.anchor = GridBagConstraints.LINE_END;
 		gc.insets = labelInset;
-		add(isoLab, gc);
+		add(workLab, gc);
 		
 		gc.gridx = 1;
 		gc.gridy = 0;
 		gc.insets = textInset;
 		gc.anchor = GridBagConstraints.LINE_START;
-		add(isoField, gc);
+		add(workField, gc);
 		
 		/*
 		 * SECOND ROW

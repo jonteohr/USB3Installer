@@ -47,10 +47,10 @@ public class MainFrame extends JFrame {
 		
 		formPanel.setFormListener(new FormListener() {
 			public void formEventOccured(FormEvent e) {
-				String iso = e.getIso();
+				String workspace = e.getWorkspace();
 				String drivers = e.getDrivers();
 				
-				textPanel.appendText("Chose .iso file: " + iso + "\n");
+				textPanel.appendText("Working in workspace at: " + workspace + "\n");
 				textPanel.appendText("Chose drivers file: " + drivers + "\n");
 			}
 		});

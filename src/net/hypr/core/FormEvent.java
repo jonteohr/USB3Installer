@@ -4,26 +4,26 @@ import java.util.EventObject;
 
 public class FormEvent extends EventObject {
 	
-	private String iso;
+	private String workspace;
 	private String drivers;
 
 	public FormEvent(Object source) {
 		super(source);
 	}
 	
-	public FormEvent(Object source, String iso, String drivers) {
+	public FormEvent(Object source, String workspace, String drivers) {
 		super(source);
 		
-		this.iso = iso;
+		this.workspace = workspace;
 		this.drivers = drivers;
 	}
 	
-	public String getIso() {
-		return iso;
+	public String getWorkspace() {
+		return workspace;
 	}
 	
-	public void setIso(String iso) {
-		this.iso = iso;
+	public void setWorkspace(String iso) {
+		this.workspace = iso;
 	}
 	
 	public String getDrivers() {
