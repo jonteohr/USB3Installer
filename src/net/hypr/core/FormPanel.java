@@ -10,9 +10,11 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
 import javax.swing.border.Border;
 
 public class FormPanel extends JPanel {
@@ -24,10 +26,15 @@ public class FormPanel extends JPanel {
 	private JLabel osLab = new JLabel("OS: ");
 	private String[] osList = {"Choose OS", "Windows 7 Pro", "Windows 7 Home", "Windows 7 Ultimate"};
 	private JButton okBtn = new JButton("Go!");
+	private JFileChooser chooser;
+	private JButton chooseBtn = new JButton(UIManager.getIcon("FileView.directoryIcon"));
 	
 	private FormListener formListener;
 	
 	public FormPanel() {
+		
+		chooseBtn.setToolTipText("Choose workspace");
+		okBtn.setToolTipText("Install drivers!");
 		
 		okBtn.addActionListener(new ActionListener() {
 			@Override
@@ -43,8 +50,22 @@ public class FormPanel extends JPanel {
 			}
 		});
 		
+		chooseBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				chooser = new JFileChooser();
+				chooser.setDialogTitle("Choose workspace");
+				chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+				chooser.setAcceptAllFileFilterUsed(false);
+			    chooser.setCurrentDirectory(new java.io.File("."));
+				
+			    System.out.println("Directory clicked");
+			    
+			}
+		});
+		
 		Dimension dim = getPreferredSize();
-		dim.width = 270;
+		dim.width = 300;
 		setPreferredSize(dim);
 		
 		Border innerBorder = BorderFactory.createTitledBorder("Configuration");
@@ -76,6 +97,11 @@ public class FormPanel extends JPanel {
 		gc.insets = textInset;
 		gc.anchor = GridBagConstraints.LINE_START;
 		add(workField, gc);
+		
+		gc.gridx = 1;
+		gc.gridy = 0;
+		gc.anchor = GridBagConstraints.LINE_END;
+		add(chooseBtn, gc);
 		
 		/*
 		 * SECOND ROW

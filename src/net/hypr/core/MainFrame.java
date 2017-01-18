@@ -5,12 +5,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 
 public class MainFrame extends JFrame {
 	
 	private TextPanel textPanel = new TextPanel();
-	private JButton btn = new JButton("Click me!");
 	private Toolbar toolbar = new Toolbar();
 	private FormPanel formPanel = new FormPanel();
 	
@@ -26,15 +26,8 @@ public class MainFrame extends JFrame {
 		
 		add(formPanel, BorderLayout.WEST);
 		add(textPanel, BorderLayout.CENTER);
-		add(toolbar, BorderLayout.NORTH);
-		
-		btn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				textPanel.appendText("hest\n");
-				
-			}
-		});
+		//add(toolbar, BorderLayout.NORTH);
+		setJMenuBar(toolbar.getMenu());
 		
 		toolbar.setStringListener(new StringListener() {
 
@@ -52,6 +45,8 @@ public class MainFrame extends JFrame {
 				
 				textPanel.appendText("Working in workspace at: " + workspace + "\n");
 				textPanel.appendText("Chose drivers file: " + drivers + "\n");
+				
+				System.out.println("GO clicked!");
 			}
 		});
 		
@@ -60,6 +55,7 @@ public class MainFrame extends JFrame {
 		setVisible(true);
 		setResizable(false);
 		System.out.println("Launching...");
+		setLocationRelativeTo(null);
 		
 		textPanel.appendText("Waiting for configuration\n");
 	}
