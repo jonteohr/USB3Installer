@@ -17,7 +17,11 @@
             </manifest>
         </jar>
     </target>
-
+	
+	<target name="test">
+		<java jar="build/jar/USB3Installer.jar" />
+	</target>
+	
     <target name="run">
         <java jar="build/jar/USB3Installer.jar" fork="true"/>
     </target>
