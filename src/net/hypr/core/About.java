@@ -6,19 +6,23 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
+import javax.swing.JTextPane;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
 
 public class About extends JFrame {
 	
 	private final String aboutTxt = "\nUSB3Installer was made to automatically install USB 3 drivers onto a Windows 7 installation .ISO file.";
 	
 	private JButton btn = new JButton("Return");
-	private JLabel text = new JLabel("There will be a more in-depth about text here.");
+	private JTextPane textArea = new JTextPane();
+	SimpleAttributeSet attribs = new SimpleAttributeSet();
 	
 	public About() {
 		super("About");
 		
-		setSize(300, 200);
+		// Windows preferences
+		setSize(300, 150);
 		setVisible(true);
 		setResizable(false);
 		System.out.println("Launching...");
@@ -28,15 +32,27 @@ public class About extends JFrame {
 		
 		this.setLayout(new BorderLayout());
 		
-		text.setHorizontalAlignment(JLabel.CENTER);
-		text.setVerticalAlignment(JLabel.CENTER);
+		// Special style settings for the text itself
+		StyleConstants.setAlignment(attribs, StyleConstants.ALIGN_CENTER);
+		StyleConstants.setFontSize(attribs, 16);
+		StyleConstants.setBold(attribs, true);
+		StyleConstants.setFontFamily(attribs, "Arial");
 		
-		add(text, BorderLayout.CENTER);
+		// Component preferences
+		textArea.setParagraphAttributes(attribs, true);
+		textArea.setEditable(false);
+		textArea.setText(aboutTxt);
+		textArea.setBackground(null);
+		
+		// Add the components to the window
+		add(textArea, BorderLayout.CENTER);
 		add(btn, BorderLayout.SOUTH);
 		
+		// What happens when the user clicks 'Return'?
 		btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.err.println("This should close this popup.");
+				System.err.println("Closed popup.");
+				dispose();
 			}
 		});
 	}

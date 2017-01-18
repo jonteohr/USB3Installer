@@ -6,6 +6,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -19,21 +20,26 @@ import javax.swing.border.Border;
 
 public class FormPanel extends JPanel {
 	
+	private String workspaceDir = "Not selected..";
+	private String driversDir = "Not selected..";
+	
 	private JLabel workLab = new JLabel("Workspace: ");
 	private JLabel driversLab = new JLabel("Drivers: ");
-	private JTextField workField = new JTextField(8);
-	private JTextField driversField = new JTextField(8);
+	private JTextField workField = new JTextField(workspaceDir, 8);
+	private JTextField driversField = new JTextField(driversDir, 8);
 	private JLabel osLab = new JLabel("OS: ");
 	private String[] osList = {"Choose OS", "Windows 7 Pro", "Windows 7 Home", "Windows 7 Ultimate"};
 	private JButton okBtn = new JButton("Go!");
 	private JFileChooser chooser;
-	private JButton chooseBtn = new JButton(UIManager.getIcon("FileView.directoryIcon"));
+	private JButton workspaceChooseBtn = new JButton(UIManager.getIcon("FileView.directoryIcon"));
+	private JButton driversChooseBtn = new JButton(UIManager.getIcon("FileView.directoryIcon"));
 	
 	private FormListener formListener;
 	
 	public FormPanel() {
 		
-		chooseBtn.setToolTipText("Choose workspace");
+		workspaceChooseBtn.setToolTipText("Choose workspace");
+		driversChooseBtn.setToolTipText("Choose drivers");
 		okBtn.setToolTipText("Install drivers!");
 		
 		okBtn.addActionListener(new ActionListener() {
@@ -50,17 +56,32 @@ public class FormPanel extends JPanel {
 			}
 		});
 		
-		chooseBtn.addActionListener(new ActionListener() {
+		workspaceChooseBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				chooser = new JFileChooser();
 				chooser.setDialogTitle("Choose workspace");
 				chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 				chooser.setAcceptAllFileFilterUsed(false);
-			    chooser.setCurrentDirectory(new java.io.File("."));
+			    chooser.setCurrentDirectory(new File("."));
 				
-			    System.out.println("Directory clicked");
+			    System.out.println("Workspace chooser clicked");
+			    System.err.println("This has no function yet..");
 			    
+			}
+		});
+		
+		driversChooseBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				chooser = new JFileChooser();
+				chooser.setDialogTitle("Choose drivers");
+				chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+				chooser.setAcceptAllFileFilterUsed(false);
+			    chooser.setCurrentDirectory(new File("."));
+			    
+			    System.out.println("Drivers chooser clicked.");
+			    System.err.println("This has no function yet..");
 			}
 		});
 		
@@ -78,6 +99,14 @@ public class FormPanel extends JPanel {
 		
 		Insets labelInset = new Insets(0, 0, 0, 5);
 		Insets textInset = new Insets(0, 0, 0, 0);
+		
+		workField.setBackground(null);
+		workField.setEditable(false);
+		workField.setBorder(null);
+		
+		driversField.setBackground(null);
+		driversField.setEditable(false);
+		driversField.setBorder(null);
 		
 		/*
 		 * FIRST ROW
@@ -101,7 +130,7 @@ public class FormPanel extends JPanel {
 		gc.gridx = 1;
 		gc.gridy = 0;
 		gc.anchor = GridBagConstraints.LINE_END;
-		add(chooseBtn, gc);
+		add(workspaceChooseBtn, gc);
 		
 		/*
 		 * SECOND ROW
@@ -120,6 +149,11 @@ public class FormPanel extends JPanel {
 		gc.insets = textInset;
 		gc.anchor = GridBagConstraints.LINE_START;
 		add(driversField, gc);
+		
+		gc.gridx = 1;
+		gc.gridy = 1;
+		gc.anchor = GridBagConstraints.LINE_END;
+		add(driversChooseBtn, gc);
 		
 		/*
 		 * THIRD ROW

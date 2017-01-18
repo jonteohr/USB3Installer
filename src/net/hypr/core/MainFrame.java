@@ -1,11 +1,12 @@
 package net.hypr.core;
 
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 public class MainFrame extends JFrame {
@@ -52,12 +53,30 @@ public class MainFrame extends JFrame {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(640, 480);
-		setVisible(true);
 		setResizable(false);
 		System.out.println("Launching...");
 		setLocationRelativeTo(null);
+		try {
+			setIconImage(ImageIO.read(new File("resources/icon.png")));
+		} catch (IOException e1) {
+			
+			e1.printStackTrace();
+		}
+		setVisible(true);
+		
 		
 		textPanel.appendText("Waiting for configuration\n");
+		textPanel.appendText("Need help? Click the help button in the upper menu!\n");
+	}
+	
+	protected static ImageIcon createImageIcon(String path) {
+		java.net.URL imgURL = MainFrame.class.getResource(path);
+		if(imgURL != null) {
+			return new ImageIcon(imgURL);
+		} else {
+			System.err.println("Couldn't find file: " + path);
+			return null;
+		}
 	}
 	
 }
