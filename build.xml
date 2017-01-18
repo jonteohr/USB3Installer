@@ -19,7 +19,7 @@
     </target>
 	
 	<target name="test">
-		<java jar="build/jar/USB3Installer.jar" />
+		<java jar="build/jar/USB3Installer.jar" fork="true"/>
 	</target>
 	
     <target name="run">
