@@ -9,7 +9,7 @@ But if you need this aswell, you're more than welcome to use it for your own use
 ### Downloads
 Currently, no downloads are available since the program is still being developed. Once it actually can do the installs, I will release a download link to the alpha versions.
 
-~~[Latest Released Version](https://github.com/condolent/USB3Installer) (Stable!)~~  
+~~[Latest Released Version](#) (Stable!)~~  
 ~~[Latest Alpha Version](#) (Un-Stable!)~~
 
 ### Source files
