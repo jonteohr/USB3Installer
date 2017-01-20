@@ -1,3 +1,4 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/1dd24cf183a64fc3996a76e0c2a96f64)](https://www.codacy.com/app/condolent/USB3Installer?utm_source=github.com&utm_medium=referral&utm_content=condolent/USB3Installer&utm_campaign=badger)
 # -WIP- USB3Installer [![Build Status](https://travis-ci.org/condolent/USB3Installer.svg?branch=master)](https://travis-ci.org/condolent/USB3Installer)
 
 ### About
