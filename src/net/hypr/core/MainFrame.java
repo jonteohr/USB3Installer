@@ -3,7 +3,6 @@ package net.hypr.core;
 import java.awt.BorderLayout;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -14,6 +13,7 @@ public class MainFrame extends JFrame {
 	private TextPanel textPanel = new TextPanel();
 	private Toolbar toolbar = new Toolbar();
 	private FormPanel formPanel = new FormPanel();
+	private FooterBar footerPanel = new FooterBar();
 	
 	private static String windowTitle = "WIN7 USB3 Installer";
 
@@ -27,7 +27,8 @@ public class MainFrame extends JFrame {
 		
 		add(formPanel, BorderLayout.WEST);
 		add(textPanel, BorderLayout.CENTER);
-		//add(toolbar, BorderLayout.NORTH);
+		add(footerPanel, BorderLayout.SOUTH);
+		
 		setJMenuBar(toolbar.getMenu());
 		
 		toolbar.setStringListener(new StringListener() {
@@ -67,6 +68,7 @@ public class MainFrame extends JFrame {
 		
 		textPanel.appendText("Waiting for configuration\n");
 		textPanel.appendText("Need help? Click the help button in the upper menu!\n");
+
 	}
 	
 	protected static ImageIcon createImageIcon(String path) {

@@ -90,7 +90,7 @@ public class FormPanel extends JPanel {
 		setPreferredSize(dim);
 		
 		Border innerBorder = BorderFactory.createTitledBorder("Configuration");
-		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
+		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 0, 5);
 		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
 		
 		setLayout(new GridBagLayout());
