@@ -12,7 +12,8 @@ import javax.swing.border.BevelBorder;
 public class FooterBar extends JPanel {
 	
 	private JLabel label;
-	private JProgressBar progress;
+	public JProgressBar progress;
+	public int currentProgress;
 	
 	public FooterBar() {
 		
@@ -26,9 +27,10 @@ public class FooterBar extends JPanel {
 		add(label);
 		
 		progress = new JProgressBar();
-		progress.setValue(0);
+		progress.setMaximum(6);
 		progress.setStringPainted(true);
 		progress.setPreferredSize(new Dimension(10, 16));
+		progress.setValue(currentProgress);
 		add(progress);
 		
 	}

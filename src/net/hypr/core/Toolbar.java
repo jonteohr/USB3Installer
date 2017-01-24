@@ -35,7 +35,7 @@ public class Toolbar extends JPanel implements ActionListener, ItemListener {
 		// Add stuff to the file-dropdown
 		menuItem = new JMenuItem("Choose Workspace", KeyEvent.VK_W);
 		menuItem.getAccessibleContext().setAccessibleDescription("Choose the workspace.");
-		menuItem.addActionListener(this);
+		menuItem.addActionListener(new FormPanel());
 		menu.add(menuItem);
 		
 		menu.addSeparator();
@@ -43,6 +43,11 @@ public class Toolbar extends JPanel implements ActionListener, ItemListener {
 		menuItem = new JMenuItem("Exit", KeyEvent.VK_Q);
 		menuItem.getAccessibleContext().setAccessibleDescription("Exit the program.");
 		menuItem.addActionListener(this);
+		menuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.err.println("Quitting...");
+			}
+		});
 		menu.add(menuItem);
 		
 		// Second menu (Help)
@@ -99,10 +104,10 @@ public class Toolbar extends JPanel implements ActionListener, ItemListener {
 			openSite("https://github.com/condolent/USB3Installer/wiki");
 		}
 		
-		if(btn.getText() == "Choose Workspace") {
+		/*if(btn.getText() == "Choose Workspace") {
 			System.out.println("Choose Workspace clicked.");
 			System.err.println("This function isn't finished yet.");
-		}
+		}*/
 		
 	}
 	

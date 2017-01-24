@@ -19,7 +19,7 @@ public class TextPanel extends JPanel {
 	}
 	
 	public void appendText(String arg) {
-		textArea.append(arg);
+		textArea.append(arg + "\n");
 	}
 
 }

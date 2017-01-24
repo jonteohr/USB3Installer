@@ -6,7 +6,10 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.File;
+import java.nio.file.Path;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -18,72 +21,71 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
 
-public class FormPanel extends JPanel {
+public class FormPanel extends JPanel implements ActionListener {
 	
-	private String workspaceDir = "Not selected..";
-	private String driversDir = "Not selected..";
+	private Path workspaceDir;
+	private String driversDir = "Intel USB 3";
 	
 	private JLabel workLab = new JLabel("Workspace: ");
-	private JLabel driversLab = new JLabel("Drivers: ");
-	private JTextField workField = new JTextField(workspaceDir, 8);
+	private JLabel driversLab = new JLabel("Driver: ");
+	private JTextField workField = new JTextField("Not selected..", 8);
 	private JTextField driversField = new JTextField(driversDir, 8);
 	private JLabel osLab = new JLabel("OS: ");
-	private String[] osList = {"Choose OS", "Windows 7 Pro", "Windows 7 Home", "Windows 7 Ultimate"};
+	private String[] osList = {"Choose OS", "Windows 7 Pro", "Windows 7 Home Basic", "Windows 7 Home Premium", "Windows 7 Ultimate"};
 	private JButton okBtn = new JButton("Go!");
 	private JFileChooser chooser;
 	private JButton workspaceChooseBtn = new JButton(UIManager.getIcon("FileView.directoryIcon"));
-	private JButton driversChooseBtn = new JButton(UIManager.getIcon("FileView.directoryIcon"));
+	private JComboBox osDropDown = new JComboBox(osList);
+	
+	public int osIndex;
 	
 	private FormListener formListener;
 	
 	public FormPanel() {
 		
+		osDropDown.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if(e.getStateChange() == ItemEvent.SELECTED) {
+					Object item = e.getItem();
+					
+					if(item.equals(osList[1])) {
+						osIndex = 3;
+						System.out.println(osList[1] + " " + osIndex);
+					} else if(item.equals(osList[2])) {
+						osIndex = 1;
+						System.out.println(osList[2] + " " + osIndex);
+					} else if(item.equals(osList[3])) {
+						osIndex = 2;
+						System.out.println(osList[3] + " " + osIndex);
+					} else if(item.equals(osList[4])) {
+						osIndex = 4;
+						System.out.println(osList[4] + " " + osIndex);
+					}
+				}
+			}
+		});
+		
 		workspaceChooseBtn.setToolTipText("Choose workspace");
-		driversChooseBtn.setToolTipText("Choose drivers");
 		okBtn.setToolTipText("Install drivers!");
 		
 		okBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String iso = workField.getText();
-				String drivers = driversField.getText();
+				Path iso = workspaceDir;
 				
-				FormEvent ev = new FormEvent(this, iso, drivers);
-				
+				FormEvent ev = new FormEvent(this, iso);
+				ev.setWorkspace(workspaceDir);
 				if(formListener != null) {
-					formListener.formEventOccured(ev);
+					try {
+						formListener.formEventOccured(ev);
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
 				}
 			}
 		});
 		
-		workspaceChooseBtn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				chooser = new JFileChooser();
-				chooser.setDialogTitle("Choose workspace");
-				chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-				chooser.setAcceptAllFileFilterUsed(false);
-			    chooser.setCurrentDirectory(new File("."));
-				
-			    System.out.println("Workspace chooser clicked");
-			    System.err.println("This has no function yet..");
-			    
-			}
-		});
-		
-		driversChooseBtn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				chooser = new JFileChooser();
-				chooser.setDialogTitle("Choose drivers");
-				chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-				chooser.setAcceptAllFileFilterUsed(false);
-			    chooser.setCurrentDirectory(new File("."));
-			    
-			    System.out.println("Drivers chooser clicked.");
-			    System.err.println("This has no function yet..");
-			}
-		});
+		workspaceChooseBtn.addActionListener(this);
 		
 		Dimension dim = getPreferredSize();
 		dim.width = 300;
@@ -150,11 +152,6 @@ public class FormPanel extends JPanel {
 		gc.anchor = GridBagConstraints.LINE_START;
 		add(driversField, gc);
 		
-		gc.gridx = 1;
-		gc.gridy = 1;
-		gc.anchor = GridBagConstraints.LINE_END;
-		add(driversChooseBtn, gc);
-		
 		/*
 		 * THIRD ROW
 		 */
@@ -167,7 +164,6 @@ public class FormPanel extends JPanel {
 		gc.anchor = GridBagConstraints.LINE_END;
 		add(osLab, gc);
 		
-		JComboBox osDropDown = new JComboBox(osList);
 		osDropDown.setSelectedIndex(0);
 		gc.gridx = 1;
 		gc.gridy = 2;
@@ -191,6 +187,23 @@ public class FormPanel extends JPanel {
 	
 	public void setFormListener(FormListener listener) {
 		this.formListener = listener;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		chooser = new JFileChooser();
+		chooser.setDialogTitle("Choose workspace");
+		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		chooser.setAcceptAllFileFilterUsed(false);
+	    chooser.setCurrentDirectory(new java.io.File("."));
+	    System.out.println("Workspace chooser clicked");
+	    
+		if(chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+			workspaceDir = chooser.getSelectedFile().toPath();
+			workField.setText(workspaceDir.toString());
+			System.out.println("New workspace: " + workspaceDir);
+		}
+		
 	}
 
 }
