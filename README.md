@@ -13,7 +13,7 @@ Currently, no downloads are available since the program is still being developed
 ~~[Latest Alpha Version](#) (Un-Stable!)~~
 
 ### How do I use this?!
-Read the [wiki](wiki), it's fairly detailed with info on how you use it.
+Read the [wiki](https://github.com/condolent/USB3Installer/wiki), it's fairly detailed with info on how you use it.
 
 ### Source files
 I've uploaded the source-files here because I want people contributing to the project by adding functions and such. If there's a function you see missing that you'd like, and you know Java, then feel free to contribute and implement said function.
