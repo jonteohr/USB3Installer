@@ -22,23 +22,22 @@ public class MainFrame extends JFrame {
 	
 	private static String windowTitle = "WIN7 USB3 Installer";
 	
-	/*
-	 * Cmd execute commands in order.
+	/**
+	 * Cmd commands that are to be executed.
+	 * [2] and [1] repeated for both files.
 	 */
-	private String cmd1 = "dism /mount-wim /wimfile:boot.wim /index:2 /mountdir:mount";
-	private String cmd2 = "dism /image:mount /add-driver:'driver' /recurse";
-	private String cmd3 = "dism /unmount-wim /mountdir:mount /commit";
-	
-	private String cmd4 = "dism /mount-wim /wimfile:install.wim /index:" + formPanel.osIndex + " /mountdir:mount";
-	private String cmd5 = "dism /image:mount /add-driver:'driver' /recurse";
-	private String cmd6 = "dism /unmount-wim /mountdir:mount /commit";
+	private String[] cmd = {
+			"dism /mount-wim /wimfile:boot.wim /index:2 /mountdir:mount",
+			"dism /image:mount /add-driver:\"driver\" /recurse",
+			"dism /unmount-wim /mountdir:mount /commit",
+			"dism /mount-wim /wimfile:install.wim /index:" + formPanel.getOsIndex() + " /mountdir:mount"
+	};
 
 	/**
 	 * The properties for the window itself
 	 */
 	public MainFrame() {
 		super(windowTitle);
-		
 		setLayout(new BorderLayout());
 		
 		add(formPanel, BorderLayout.WEST);
@@ -60,38 +59,38 @@ public class MainFrame extends JFrame {
 			public void formEventOccured(FormEvent e) throws Exception {
 				Path workspace = e.getWorkspace();
 				
+				
 				if(workspace == null) {
 					textPanel.appendText("[ERROR] Workspace not selected...");
-				} else {
-					textPanel.appendText("Running!");
+				} else if(formPanel.osIndex == 0) {
+					textPanel.appendText("[ERROR] No operating system defined!");
+				} else if(workspace != null && !(formPanel.osIndex == 0)) {
 					textPanel.appendText("Working in: " + workspace);
-				}
-				
-				// Try some cmd commands..
-				ProcessBuilder builder = new ProcessBuilder(
-						"cmd.exe", "/c", cmd1 + " && " + cmd2 + " && " + cmd3 + " && " + cmd4 + " && " + cmd5 + " && " + cmd6
-				);
-				builder.directory(new File(workspace.toString()));
-				builder.redirectErrorStream(true);
-				Process p = builder.start();
-				BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
-				String line;
-				while(true) {
-					line = r.readLine();
-					if(line == null) {
-						break;
+					footerPanel.setProgress(3);
+					
+					// Try some cmd commands..
+					ProcessBuilder builder = new ProcessBuilder(
+							"cmd.exe", "/k", cmd[0] + " && " + cmd[1] + " && " + cmd[2] + " && " + cmd[3] + " && " + cmd[1] + " && " + cmd[2]
+						);
+					builder.directory(new File(workspace.toString()));
+					builder.redirectErrorStream(true);
+					Process p = builder.start();
+					BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
+					String line;
+					while(true) {
+						line = r.readLine();
+						if(line == null) {
+							break;
+						}
+						textPanel.appendText(line);
+						System.err.println(line);
+					
 					}
-					//textPanel.appendText(line);
-					System.err.println(line);
-					textPanel.appendText(line);
+					p.waitFor();
+					textPanel.appendText("Process finished.");
+					textPanel.appendText("Make sure you check for errors!");
 					
 				}
-
-				if(workspace != null) {
-					System.err.println(workspace.toString());
-					textPanel.appendText(workspace.toString());
-				}
-				
 			}
 		});
 		
@@ -108,9 +107,10 @@ public class MainFrame extends JFrame {
 		}
 		setVisible(true);
 		
-		
-		textPanel.appendText("Waiting for configuration");
+		textPanel.appendText("Waiting for configuration.");
 		textPanel.appendText("Need help? Click the help button in the upper menu!");
+		
+		
 		
 		addWindowListener(new WindowListener() {
 			public void windowClosing(WindowEvent e) {
@@ -119,46 +119,29 @@ public class MainFrame extends JFrame {
 			}
 
 			@Override
-			public void windowActivated(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void windowActivated(WindowEvent e) {}
 
 			@Override
-			public void windowClosed(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void windowClosed(WindowEvent e) {}
 
 			@Override
-			public void windowDeactivated(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void windowDeactivated(WindowEvent e) {}
 
 			@Override
-			public void windowDeiconified(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void windowDeiconified(WindowEvent e) {}
 
 			@Override
-			public void windowIconified(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void windowIconified(WindowEvent e) {}
 
 			@Override
-			public void windowOpened(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void windowOpened(WindowEvent e) {}
 		});
 
 	}
+
 	
 	protected static ImageIcon createImageIcon(String path) {
-		java.net.URL imgURL = MainFrame.class.getResource(path);
+		java.net.URL imgURL = Toolbar.class.getResource(path);
 		if(imgURL != null) {
 			return new ImageIcon(imgURL);
 		} else {
@@ -166,5 +149,7 @@ public class MainFrame extends JFrame {
 			return null;
 		}
 	}
+	
+	
 	
 }

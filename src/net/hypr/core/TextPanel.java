@@ -1,6 +1,8 @@
 package net.hypr.core;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Insets;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -14,12 +16,18 @@ public class TextPanel extends JPanel {
 		
 		setLayout(new BorderLayout());
 		textArea.setEditable(false);
+		textArea.setMargin(new Insets(2, 5, 2, 5));
 		add(new JScrollPane(textArea), BorderLayout.CENTER);
 		
 	}
 	
-	public void appendText(String arg) {
-		textArea.append(arg + "\n");
+	/**
+	 * Add text to the big text panel to the right.
+	 * @param msg
+	 * @param c
+	 */
+	public void appendText(String msg) {
+		textArea.append(msg + "\n");
 	}
 
 }
