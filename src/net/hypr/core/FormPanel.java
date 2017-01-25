@@ -22,7 +22,7 @@ import javax.swing.border.Border;
 
 public class FormPanel extends JPanel implements ActionListener {
 	
-	private Path workspaceDir;
+	protected Path workspaceDir;
 	private String driversDir = "Intel USB 3";
 	
 	private JLabel workLab = new JLabel("Workspace: ");
@@ -45,7 +45,7 @@ public class FormPanel extends JPanel implements ActionListener {
 		osDropDown.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if(e.getStateChange() == ItemEvent.SELECTED) {
-					Object item = e.getItem();
+					String item = String.valueOf(e.getItem());
 					
 					if(item.equals(osList[1])) {
 						osIndex = 3;

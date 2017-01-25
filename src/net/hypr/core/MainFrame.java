@@ -19,6 +19,8 @@ public class MainFrame extends JFrame {
 	private Toolbar toolbar = new Toolbar();
 	private FormPanel formPanel = new FormPanel();
 	private FooterBar footerPanel = new FooterBar();
+	private cmdExec cmdExec = new cmdExec();
+	
 	
 	private static String windowTitle = "WIN7 USB3 Installer";
 	
@@ -26,11 +28,11 @@ public class MainFrame extends JFrame {
 	 * Cmd commands that are to be executed.
 	 * [2] and [1] repeated for both files.
 	 */
-	private String[] cmd = {
+	protected String[] cmd = {
 			"dism /mount-wim /wimfile:boot.wim /index:2 /mountdir:mount",
 			"dism /image:mount /add-driver:\"driver\" /recurse",
 			"dism /unmount-wim /mountdir:mount /commit",
-			"dism /mount-wim /wimfile:install.wim /index:" + formPanel.getOsIndex() + " /mountdir:mount"
+			""
 	};
 
 	/**
@@ -61,12 +63,27 @@ public class MainFrame extends JFrame {
 				
 				
 				if(workspace == null) {
+					
 					textPanel.appendText("[ERROR] Workspace not selected...");
-				} else if(formPanel.osIndex == 0) {
+					
+				}
+				
+				if(formPanel.osIndex == 0) {
+					
 					textPanel.appendText("[ERROR] No operating system defined!");
-				} else if(workspace != null && !(formPanel.osIndex == 0)) {
+					
+				}
+				
+				if(workspace != null && !(formPanel.osIndex == 0)) {
+					
 					textPanel.appendText("Working in: " + workspace);
-					footerPanel.setProgress(3);
+					
+					footerPanel.setProgress((footerPanel.getProgress()) + 1);
+					
+					cmd[3] = "dism /mount-wim /wimfile:install.wim /index:" + formPanel.getOsIndex() + " /mountdir:mount";
+														
+					//cmdExec.doInBackground();
+					
 					
 					// Try some cmd commands..
 					ProcessBuilder builder = new ProcessBuilder(
@@ -89,6 +106,7 @@ public class MainFrame extends JFrame {
 					p.waitFor();
 					textPanel.appendText("Process finished.");
 					textPanel.appendText("Make sure you check for errors!");
+					
 					
 				}
 			}

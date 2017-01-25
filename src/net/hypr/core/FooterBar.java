@@ -43,7 +43,18 @@ public class FooterBar extends JPanel {
 	 * @param i
 	 */
 	public void setProgress(int i) {
-		progress.setValue(i);
+		if(progress.getValue() < 6) {
+			progress.setValue(i);
+		} else {
+			System.err.println("Progressbar value is 6 or more already!");
+		}
+	}
+	
+	/**
+	 * Returns the value of the progress bar
+	 */
+	public Integer getProgress() {
+		return progress.getValue();
 	}
 
 }
