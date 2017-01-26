@@ -20,7 +20,8 @@ public class Toolbar extends JPanel implements ActionListener, ItemListener {
 	
 	private JMenuBar menuBar;
 	private JMenu menu, submenu;
-	private JMenuItem menuItem;
+	protected JMenuItem menuItem;
+	
 	public Toolbar() {
 		
 		// Creates the menu bar
@@ -36,6 +37,7 @@ public class Toolbar extends JPanel implements ActionListener, ItemListener {
 		menuItem = new JMenuItem("Choose Workspace", KeyEvent.VK_W);
 		menuItem.getAccessibleContext().setAccessibleDescription("Choose the workspace.");
 		menuItem.addActionListener(new FormPanel());
+		menuItem.setEnabled(true);
 		menu.add(menuItem);
 		
 		menu.addSeparator();

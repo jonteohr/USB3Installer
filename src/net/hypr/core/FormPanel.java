@@ -31,7 +31,7 @@ public class FormPanel extends JPanel implements ActionListener {
 	private JTextField driversField = new JTextField(driversDir, 8);
 	private JLabel osLab = new JLabel("OS: ");
 	private String[] osList = {"Choose OS", "Windows 7 Pro", "Windows 7 Home Basic", "Windows 7 Home Premium", "Windows 7 Ultimate"};
-	private JButton okBtn = new JButton("Go!");
+	protected JButton okBtn = new JButton("Go!");
 	private JFileChooser chooser;
 	private JButton workspaceChooseBtn = new JButton(UIManager.getIcon("FileView.directoryIcon"));
 	private JComboBox osDropDown = new JComboBox(osList);
@@ -211,6 +211,29 @@ public class FormPanel extends JPanel implements ActionListener {
 			System.out.println("New workspace: " + workspaceDir);
 		}
 		
+	}
+	
+	/**
+	 * Disabled the drop-down list.
+	 * @param bool
+	 */
+	protected void disableList(Boolean bool) {
+		if(bool.booleanValue() == true) {
+			osDropDown.setEnabled(false);
+		} else if(bool.booleanValue() == false) {
+			osDropDown.setEnabled(true);
+		}
+	}
+	
+	/**
+	 * Disables the workspace button.
+	 */
+	protected void disableWorkspace(Boolean bool) {
+		if(bool.booleanValue() == true) {
+			workspaceChooseBtn.setEnabled(false);
+		} else if(bool.booleanValue() == false) {
+			workspaceChooseBtn.setEnabled(true);
+		}
 	}
 
 }

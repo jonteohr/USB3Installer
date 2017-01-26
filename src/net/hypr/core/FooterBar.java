@@ -14,7 +14,7 @@ import javax.swing.border.EmptyBorder;
 public class FooterBar extends JPanel {
 	
 	private JLabel label;
-	private JProgressBar progress;
+	protected JProgressBar progress;
 	
 	
 	public FooterBar() {

@@ -29,5 +29,12 @@ public class TextPanel extends JPanel {
 	public void appendText(String msg) {
 		textArea.append(msg + "\n");
 	}
+	
+	/**
+	 * Remove all text inside the panel.
+	 */
+	public void clearText() {
+		textArea.setText(null);
+	}
 
 }

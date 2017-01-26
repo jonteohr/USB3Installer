@@ -19,8 +19,9 @@ public class MainFrame extends JFrame {
 	private Toolbar toolbar = new Toolbar();
 	private FormPanel formPanel = new FormPanel();
 	private FooterBar footerPanel = new FooterBar();
-	private cmdExec cmdExec = new cmdExec();
+	private cmdExec cmdExec;
 	
+	private Path workspaceDirectory;
 	
 	private static String windowTitle = "WIN7 USB3 Installer";
 	
@@ -65,7 +66,7 @@ public class MainFrame extends JFrame {
 				if(workspace == null) {
 					
 					textPanel.appendText("[ERROR] Workspace not selected...");
-					
+					runWorker();
 				}
 				
 				if(formPanel.osIndex == 0) {
@@ -75,16 +76,10 @@ public class MainFrame extends JFrame {
 				}
 				
 				if(workspace != null && !(formPanel.osIndex == 0)) {
+					workspaceDirectory = workspace;
+					runWorker();
 					
-					textPanel.appendText("Working in: " + workspace);
-					
-					footerPanel.setProgress((footerPanel.getProgress()) + 1);
-					
-					cmd[3] = "dism /mount-wim /wimfile:install.wim /index:" + formPanel.getOsIndex() + " /mountdir:mount";
-														
-					//cmdExec.doInBackground();
-					
-					
+					/*
 					// Try some cmd commands..
 					ProcessBuilder builder = new ProcessBuilder(
 							"cmd.exe", "/k", cmd[0] + " && " + cmd[1] + " && " + cmd[2] + " && " + cmd[3] + " && " + cmd[1] + " && " + cmd[2]
@@ -106,7 +101,7 @@ public class MainFrame extends JFrame {
 					p.waitFor();
 					textPanel.appendText("Process finished.");
 					textPanel.appendText("Make sure you check for errors!");
-					
+					*/
 					
 				}
 			}
@@ -168,6 +163,20 @@ public class MainFrame extends JFrame {
 		}
 	}
 	
-	
+	/**
+	 * Run the SwingWorker
+	 */
+	public void runWorker() {
+		textPanel.clearText();
+		formPanel.disableList(true);
+		formPanel.disableWorkspace(true);
+		cmdExec = new cmdExec();
+		cmdExec.execute();
+		footerPanel.progress.setIndeterminate(true);
+		formPanel.okBtn.setEnabled(false);
+		cmd[3] = "dism /mount-wim /wimfile:install.wim /index:" + formPanel.getOsIndex() + " /mountdir:mount";
+		textPanel.appendText("Working in: " + workspaceDirectory);
+		footerPanel.setProgress((footerPanel.getProgress()) + 1);
+	}
 	
 }

@@ -2,68 +2,70 @@ package net.hypr.core;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.SwingWorker;
 
-public class cmdExec extends SwingWorker<List<String>, String> {
-
-	//private MainFrame mainFrame = new MainFrame();
-	private TextPanel textPanel = new TextPanel();
+public class cmdExec extends SwingWorker<Integer, String> {
+	
+	private int status;
+	
 	private FormPanel formPanel = new FormPanel();
+	private FooterBar footerBar = new FooterBar();
+	private TextPanel textPanel = new TextPanel();
 	
-	
-	/**
-	 * Cmd commands that are to be executed.
-	 * [2] and [1] repeated for both files.
-	 */
-	protected String[] cmd = {
-			"dism /mount-wim /wimfile:boot.wim /index:2 /mountdir:mount",
-			"dism /image:mount /add-driver:\"driver\" /recurse",
-			"dism /unmount-wim /mountdir:mount /commit",
-			""
-	};
-	
-	
-	@Override
-	protected List<String> doInBackground() throws Exception {
-		List<String> output = new ArrayList<>(25);
-		ProcessBuilder builder = new ProcessBuilder(
-				"cmd.exe", "/k", cmd[0] + " && " + cmd[1] + " && " + cmd[2] + " && " + cmd[3] + " && " + cmd[1] + " && " + cmd[2]
-			);
-		builder.directory(new File(formPanel.workspaceDir.toString()));
-		builder.redirectErrorStream(true);
-		
-		Process p = builder.start();
-		try(BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()))) {
-			String line = null;
-			while((line = r.readLine()) != null) {
-				output.add(line);
-				publish(line);
-			}
-		}
-		
-		return output;
+	public cmdExec() {
+		textPanel.appendText((this.getState()).toString());
 	}
 	
 	@Override
-	protected void process(List<String> chunks) {
-		for(String text : chunks) {
-			textPanel.appendText(text + "\n");
+	protected Integer doInBackground() {
+		try {
+			
+			ProcessBuilder pb = new ProcessBuilder(
+				"cmd.exe", "/c", "copy NUL createThis.txt"
+			);
+			pb.directory(new File(formPanel.workspaceDir.toString()));
+			pb.redirectErrorStream(true);
+			Process p = pb.start();
+			String s;
+			BufferedReader stdout = new BufferedReader(new InputStreamReader(p.getInputStream()));
+			
+			while((s = stdout.readLine()) != null && !isCancelled()) {
+				publish(s);
+			}
+			if(!isCancelled()) {
+				status = p.waitFor();
+			}
+			p.getInputStream().close();
+			p.getOutputStream().close();
+			p.getErrorStream().close();
+			p.destroy();
+			
+		} catch(IOException | InterruptedException ex) {
+			ex.printStackTrace(System.err);
+		}
+		
+		return status;
+	}
+	
+	@Override
+	protected void process(List<String> messages) {
+		formPanel.okBtn.setText((this.getState()).toString());
+		for(String message : messages) {
+			textPanel.appendText(message + "\n");
 		}
 	}
 	
 	@Override
 	protected void done() {
-		try {
-			
-			
-			
-		} catch (Exception ignore) {
-			
-		}
+		textPanel.appendText((this.getState()).toString() + " " + status);
+		formPanel.okBtn.setEnabled(true);
+		footerBar.progress.setIndeterminate(false);
+		formPanel.disableList(false);
+		formPanel.disableWorkspace(false);
 	}
-
+	
 }
