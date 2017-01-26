@@ -3,10 +3,8 @@ package net.hypr.core;
 import java.awt.BorderLayout;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.nio.file.Path;
 
 import javax.imageio.ImageIO;
@@ -15,26 +13,17 @@ import javax.swing.JFrame;
 
 public class MainFrame extends JFrame {
 	
-	private TextPanel textPanel = new TextPanel();
+	protected TextPanel textPanel = new TextPanel();
 	private Toolbar toolbar = new Toolbar();
-	private FormPanel formPanel = new FormPanel();
-	private FooterBar footerPanel = new FooterBar();
+	protected FormPanel formPanel = new FormPanel();
+	protected FooterBar footerPanel = new FooterBar();
 	private cmdExec cmdExec;
+	private WorkspaceWarning workWarning;
+	private OSWarning osWarning;
 	
 	private Path workspaceDirectory;
 	
 	private static String windowTitle = "WIN7 USB3 Installer";
-	
-	/**
-	 * Cmd commands that are to be executed.
-	 * [2] and [1] repeated for both files.
-	 */
-	protected String[] cmd = {
-			"dism /mount-wim /wimfile:boot.wim /index:2 /mountdir:mount",
-			"dism /image:mount /add-driver:\"driver\" /recurse",
-			"dism /unmount-wim /mountdir:mount /commit",
-			""
-	};
 
 	/**
 	 * The properties for the window itself
@@ -64,13 +53,12 @@ public class MainFrame extends JFrame {
 				
 				
 				if(workspace == null) {
-					
+					workWarning = new WorkspaceWarning();
 					textPanel.appendText("[ERROR] Workspace not selected...");
-					runWorker();
 				}
 				
 				if(formPanel.osIndex == 0) {
-					
+					osWarning = new OSWarning();
 					textPanel.appendText("[ERROR] No operating system defined!");
 					
 				}
@@ -170,13 +158,12 @@ public class MainFrame extends JFrame {
 		textPanel.clearText();
 		formPanel.disableList(true);
 		formPanel.disableWorkspace(true);
-		cmdExec = new cmdExec();
+		cmdExec = new cmdExec(formPanel, footerPanel, textPanel);
 		cmdExec.execute();
 		footerPanel.progress.setIndeterminate(true);
 		formPanel.okBtn.setEnabled(false);
-		cmd[3] = "dism /mount-wim /wimfile:install.wim /index:" + formPanel.getOsIndex() + " /mountdir:mount";
+		cmdExec.cmd[3] = "dism /mount-wim /wimfile:install.wim /index:" + formPanel.getOsIndex() + " /mountdir:mount";
 		textPanel.appendText("Working in: " + workspaceDirectory);
-		footerPanel.setProgress((footerPanel.getProgress()) + 1);
 	}
 	
 }

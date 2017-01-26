@@ -10,7 +10,7 @@ import javax.swing.JTextArea;
 
 public class TextPanel extends JPanel {
 	
-	private JTextArea textArea = new JTextArea();
+	protected JTextArea textArea = new JTextArea();
 	
 	public TextPanel() {
 		

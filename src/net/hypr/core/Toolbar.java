@@ -18,6 +18,8 @@ import javax.swing.JPanel;
 
 public class Toolbar extends JPanel implements ActionListener, ItemListener {
 	
+	private About popup;
+	
 	private JMenuBar menuBar;
 	private JMenu menu, submenu;
 	protected JMenuItem menuItem;
