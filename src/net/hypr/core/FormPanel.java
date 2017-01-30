@@ -27,7 +27,7 @@ public class FormPanel extends JPanel implements ActionListener {
 	
 	private JLabel workLab = new JLabel("Workspace: ");
 	private JLabel driversLab = new JLabel("Driver: ");
-	private JTextField workField = new JTextField("Not selected..", 8);
+	protected JTextField workField = new JTextField("Not selected..", 8);
 	private JTextField driversField = new JTextField(driversDir, 8);
 	private JLabel osLab = new JLabel("OS: ");
 	private String[] osList = {"Choose OS", "Windows 7 Pro", "Windows 7 Home Basic", "Windows 7 Home Premium", "Windows 7 Ultimate"};

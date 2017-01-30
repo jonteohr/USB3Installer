@@ -8,6 +8,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import com.sun.awt.SecurityWarning;
+
 public class TextPanel extends JPanel {
 	
 	protected JTextArea textArea = new JTextArea();
@@ -15,9 +17,12 @@ public class TextPanel extends JPanel {
 	public TextPanel() {
 		
 		setLayout(new BorderLayout());
+		add(new JScrollPane(textArea), BorderLayout.CENTER);
+
 		textArea.setEditable(false);
 		textArea.setMargin(new Insets(2, 5, 2, 5));
-		add(new JScrollPane(textArea), BorderLayout.CENTER);
+		textArea.setWrapStyleWord(true);
+		textArea.setLineWrap(true);
 		
 	}
 	
@@ -28,6 +33,13 @@ public class TextPanel extends JPanel {
 	 */
 	public void appendText(String msg) {
 		textArea.append(msg + "\n");
+	}
+	
+	/**
+	 * Same as append text, but with no \n suffix
+	 */
+	public void sendLog(String msg) {
+		textArea.append(msg);
 	}
 	
 	/**

@@ -60,6 +60,14 @@ public class Toolbar extends JPanel implements ActionListener, ItemListener {
 		menu.getAccessibleContext().setAccessibleDescription("Info about the program.");
 		menuBar.add(menu);
 		
+		// Adds a disabled button that shows the current version
+		menuItem = new JMenuItem(MainFrame.version);
+		menuItem.getAccessibleContext().setAccessibleDescription("v 0.5a");;
+		menuItem.setEnabled(false);
+		menu.add(menuItem);
+		
+		menu.addSeparator();
+		
 		// Adds a about button. This will open a small window with some information!
 		menuItem = new JMenuItem("About", KeyEvent.VK_A);
 		menuItem.getAccessibleContext().setAccessibleDescription("Information regarding the software.");
@@ -152,35 +160,6 @@ public class Toolbar extends JPanel implements ActionListener, ItemListener {
 			System.err.println("Couldn't open the browser since Desktop is not supported.");
 		}
 	}
-	
-	
-	
-	/*private JButton file = new JButton("File", createImageIcon("images/archive.png"));
-	private JButton help = new JButton("Help");
-	
-	private StringListener textListener;
-	
-	Font smallSystemFont = new Font("Lucide Grande", Font.PLAIN, 11);
-	
-	public Toolbar() {
-		setBorder(BorderFactory.createEtchedBorder());
-		
-		setLayout(new FlowLayout(FlowLayout.LEFT));
-		
-		file.setFont(smallSystemFont);
-		help.setFont(smallSystemFont);
-		
-		add(file);
-		add(help);
-		
-		file.addActionListener(this);
-		help.addActionListener(this);
-		
-		file.setToolTipText("Archive");
-		help.setToolTipText("Help");
-		
-	}*/
-	
 	
 	protected static ImageIcon createImageIcon(String path) {
 		java.net.URL imgURL = Toolbar.class.getResource(path);

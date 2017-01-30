@@ -25,7 +25,7 @@ public class FooterBar extends JPanel {
 		
 		Border margin = new EmptyBorder(0, 5, 0, 5);
 		
-		label = new JLabel("v 0.4", SwingConstants.LEFT);
+		label = new JLabel("Ready", SwingConstants.LEFT);
 		label.setBorder(margin);
 		add(label);
 		
@@ -39,22 +39,10 @@ public class FooterBar extends JPanel {
 	}
 	
 	/**
-	 * Sets the progress of the progressbar in the lower right corner. It ranges from 0-6.
-	 * @param i
+	 * Sets the text for the status-label.
 	 */
-	public void setProgress(int i) {
-		if(progress.getValue() < 6) {
-			progress.setValue(i);
-		} else {
-			System.err.println("Progressbar value is 6 or more already!");
-		}
-	}
-	
-	/**
-	 * Returns the value of the progress bar
-	 */
-	public Integer getProgress() {
-		return progress.getValue();
+	public void setStatus(String arg) {
+		label.setText(arg);
 	}
 
 }
