@@ -59,6 +59,9 @@ public class FormPanel extends JPanel implements ActionListener {
 					} else if(item.equals(osList[4])) {
 						osIndex = 4;
 						System.out.println(osList[4] + " [" + osIndex + "]");
+					} else if(item.equals(osList[0])) {
+						osIndex = 0;
+						System.out.println("No OS selected.. " + "[" + osIndex + "]");
 					}
 				}
 			}

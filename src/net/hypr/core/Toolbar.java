@@ -62,7 +62,7 @@ public class Toolbar extends JPanel implements ActionListener, ItemListener {
 		
 		// Adds a disabled button that shows the current version
 		menuItem = new JMenuItem(MainFrame.version);
-		menuItem.getAccessibleContext().setAccessibleDescription("v 0.5.2");;
+		menuItem.getAccessibleContext().setAccessibleDescription("v 0.5.2a");;
 		menuItem.setEnabled(false);
 		menu.add(menuItem);
 		
