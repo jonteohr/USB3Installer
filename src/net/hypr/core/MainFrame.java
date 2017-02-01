@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 
 public class MainFrame extends JFrame {
 	
-	protected static String version = "0.5b";
+	protected static String version = "0.5.2a";
 	
 	protected TextPanel textPanel = new TextPanel();
 	private Toolbar toolbar = new Toolbar();
