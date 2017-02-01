@@ -31,7 +31,7 @@ public class FooterBar extends JPanel {
 		
 		progress = new JProgressBar();
 		progress.setMaximum(6);
-		progress.setStringPainted(false);
+		progress.setStringPainted(true);
 		progress.setPreferredSize(new Dimension(10, 16));
 		progress.setValue(0);
 		add(progress);

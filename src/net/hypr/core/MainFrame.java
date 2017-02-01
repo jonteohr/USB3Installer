@@ -142,13 +142,14 @@ public class MainFrame extends JFrame {
 	 */
 	public void runWorker() {
 		textPanel.clearText();
+		footerPanel.progress.setValue(0);
 		formPanel.disableList(true);
 		formPanel.disableWorkspace(true);
 		cmdExec.execute();
 		footerPanel.progress.setIndeterminate(true);
 		formPanel.okBtn.setEnabled(false);
 		footerPanel.setStatus("Working...");
-		cmdExec.cmdInstall[0] = "dism /mount-wim /wimfile:install.wim /index:" + formPanel.getOsIndex() + " /mountdir:mount";
+		cmdExec.cmdBoot[3] = "dism /mount-wim /wimfile:install.wim /index:" + formPanel.getOsIndex() + " /mountdir:mount";
 	}
 	
 }
