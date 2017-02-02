@@ -9,7 +9,7 @@ But if you need this aswell, you're more than welcome to use it for your own use
 ### Downloads
 Currently, no downloads are available since the program is still being developed. Once it actually can do the installs, I will release a download link to the alpha versions.
 
-[Latest Released Version](http://ohrstrom.nu/usb3installer/stable/USB3Installer.zip) (Stable!)  
+[Latest Released Version](https://sourceforge.net/projects/usb3installer/) (Stable!)  
 ~~[Latest Alpha Version](#) (Un-Stable!)~~
 
 ### How do I use this?!
