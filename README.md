@@ -1,4 +1,4 @@
-# USB3Installer [![Build Status](https://travis-ci.org/condolent/USB3Installer.svg?branch=master)](https://travis-ci.org/condolent/USB3Installer) [![Download USB3Installer](https://img.shields.io/sourceforge/dt/usb3installer.svg)](https://sourceforge.net/projects/usb3installer/)
+# USB3Installer [![Build Status](https://travis-ci.org/condolent/USB3Installer.svg?branch=master)](https://travis-ci.org/condolent/USB3Installer) [![Download USB3Installer](https://img.shields.io/sourceforge/dt/usb3installer.svg)](https://sourceforge.net/projects/usb3installer/) ![Current status](https://img.shields.io/badge/status-beta-orange.svg)
 
 ### About
 This is a software made in Java, that lets the user choose a windows 7 operating system setup .iso-file and installs USB-3 drivers into the setup for them. Which prevents the issue where you try to install windows on a PC with USB 3-ports only, causing your keyboard and mouse not working.
