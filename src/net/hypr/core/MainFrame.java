@@ -13,7 +13,8 @@ import javax.swing.JOptionPane;
 
 public class MainFrame extends JFrame {
 	
-	protected static String version = "0.5.2a";
+	// The software version. This sets the text in the toolbar also!
+	protected static String version = "0.5.2b";
 	
 	protected TextPanel textPanel = new TextPanel();
 	private Toolbar toolbar = new Toolbar();

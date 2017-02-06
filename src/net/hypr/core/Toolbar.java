@@ -82,6 +82,13 @@ public class Toolbar extends JPanel implements ActionListener, ItemListener {
 		
 		menu.addSeparator();
 		
+		// Report bug button
+		menuItem = new JMenuItem("Report a bug", new ImageIcon(this.getClass().getResource("/resource/report_bug.png")));
+		menuItem.getAccessibleContext().setAccessibleDescription("Report a bug found in the software.");
+		menuItem.setMnemonic(KeyEvent.VK_R);
+		menuItem.addActionListener(this);
+		menu.add(menuItem);
+		
 		// Adds a option to go to the github project
 		menuItem = new JMenuItem("Github", KeyEvent.VK_G);
 		menuItem.getAccessibleContext().setAccessibleDescription("Links to the Github project.");
@@ -114,6 +121,10 @@ public class Toolbar extends JPanel implements ActionListener, ItemListener {
 		
 		if(btn.getText() == "How do I use this?") {
 			openSite("https://github.com/condolent/USB3Installer/wiki");
+		}
+		
+		if(btn.getText() == "Report a bug") {
+			openSite("https://github.com/condolent/USB3Installer/issues");
 		}
 		
 		/*if(btn.getText() == "Choose Workspace") {
