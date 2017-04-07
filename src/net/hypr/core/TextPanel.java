@@ -8,8 +8,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import com.sun.awt.SecurityWarning;
-
 public class TextPanel extends JPanel {
 	
 	protected JTextArea textArea = new JTextArea();
